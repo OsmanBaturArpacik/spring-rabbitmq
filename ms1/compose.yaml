@@ -1,0 +1,47 @@
+name: contact-other-services-with-rabbitmq
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.13.6-management-alpine
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - my_network
+#    environment:
+#      RABBITMQ_HOST: rabbitmq
+#      RABBITMQ_DEFAULT_USER: user
+#      RABBITMQ_DEFAULT_PASS: password
+
+  microservice1:
+    build:
+      context: ../ms1
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    container_name: ms1
+    image: ms1:latest
+    networks:
+      - my_network
+    depends_on:
+      - rabbitmq
+#    volumes:
+#      - ./db:/app/db
+
+  microservice2:
+    build:
+      context: ../ms2
+      dockerfile: Dockerfile
+#    ports:
+#      - "8081:8081"
+    container_name: ms2
+    image: ms2:latest
+    networks:
+      - my_network
+    depends_on:
+      - rabbitmq
+
+networks:
+  my_network:
+    driver: bridge
