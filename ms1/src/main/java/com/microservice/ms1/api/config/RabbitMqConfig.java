@@ -9,17 +9,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMqConfig {
     public static final String MY_QUEUE = "MyQueue";
-    public static final String EXPIRED_QUEUE = "ExpiredQueue";
     public static final String EXCHANGE = "MyTopicExchange";
     public static final String ROUTING_KEY = "topic";
 
     @Bean
     Queue myQueue() {
         return new Queue(MY_QUEUE, true);
-    }
-    @Bean
-    Queue expiredQueue() {
-        return new Queue(EXPIRED_QUEUE, true);
     }
 
     @Bean
@@ -35,15 +30,6 @@ public class RabbitMqConfig {
                 .bind(myQueue())
                 .to(myExchange())
                 .with(ROUTING_KEY + "." + MY_QUEUE)
-                .noargs();
-    }
-
-    @Bean
-    Binding expiredQueueBinding() {
-        return BindingBuilder
-                .bind(expiredQueue())
-                .to(myExchange())
-                .with(ROUTING_KEY + "." + EXPIRED_QUEUE)
                 .noargs();
     }
 

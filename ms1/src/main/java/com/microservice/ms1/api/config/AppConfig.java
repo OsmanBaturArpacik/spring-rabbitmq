@@ -1,25 +1,3 @@
-//package com.price.discount.api.config;
-//
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.jdbc.core.JdbcTemplate;
-//import org.springframework.jdbc.datasource.DriverManagerDataSource;
-//
-//
-//@Configuration
-//public class AppConfig {
-//    @Bean
-//    public JdbcTemplate jdbcTemplate() {
-//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//        dataSource.setDriverClassName("org.sqlite.JDBC");
-//        dataSource.setUrl("jdbc:sqlite:" + getClass().getClassLoader().getResource("db/test.db").getPath());
-//        return new JdbcTemplate(dataSource);
-//    }
-//
-//
-//}
-//
-
 package com.microservice.ms1.api.config;
 
 import org.springframework.context.annotation.Bean;
@@ -47,7 +25,7 @@ public class AppConfig {
             String dbPath = dbFile.getAbsolutePath();
             dataSource.setUrl("jdbc:sqlite:" + dbPath);
         } catch (IOException e) {
-            throw new RuntimeException("Veritabanı dosyasını oluştururken bir hata oluştu.", e);
+            throw new RuntimeException("Veritabani dosyasini olustururken bir hata olustu.", e);
         }
 
         return new JdbcTemplate(dataSource);
@@ -59,7 +37,7 @@ public class AppConfig {
             String resourcePath = "/db/test.db";
             try (InputStream is = DatabaseInitializer.class.getResourceAsStream(resourcePath)) {
                 if (is == null) {
-                    throw new RuntimeException("Veritabanı dosyası bulunamadı: " + resourcePath);
+                    throw new RuntimeException("Veritabani dosyasi bulunamadi: " + resourcePath);
                 }
 
                 Path tempFile = Files.createTempFile("test", ".db");
